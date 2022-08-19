@@ -2,8 +2,15 @@ package hello.core.member;
 
 public class MemberServiceImp implements MemberService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    // 구현 객체를 선택해서 MemberRepository 선언
+    private final MemberRepository memberRepository;
+
+    // 생성자를 통해서 MeberRepository 구현체가 무엇이 들어갈지 설정해준다.
+    // MemberServiceImp 코드에 MemoryMemberRepository가 없는 것을 확인할 수 있다.
+    // 추상화에 의존하면서 DIP를 지킬 수 있게 된다.
+    // 이를 생성자 주입이라고 한다.
+    public MemberServiceImp(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void join(Member member) {

@@ -1,11 +1,26 @@
 package hello.core;
 
 import hello.core.member.*;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MemberApp {
 
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImp();
+//        AppConfig appConfig = new AppConfig();
+//        MemberService memberService = appConfig.memberService();
+
+        /* Spring 생성 */
+        /*
+        * 1. Spring의 시작은 모두 ApplicationContext에서 시작된다.
+        * 2. Spring의 컨테이너라고 보면 된다.
+        * 3. 파라미터로 AppConfig.class를 넘겨주면 되는데 이는 AppConfig에 있는 환경 설정 정보를 가진다.
+        * 4. Spring이 안에 있는 요소들을 Spring 컨테이너에 집어넣어 관리해준다.
+        */
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
